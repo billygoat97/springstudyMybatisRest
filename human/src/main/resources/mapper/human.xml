@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="nine.kkh.human.model.mapper.HumanMapper"> <!-- 앞으로 sql문을 부를때 뭐라고 부를지에 대해서 id로 부른다 -->
+	<select id = "listHuman" resultType = "humanDto"> <!--  이걸 이미 경로가 정해져 있어서 humanDto라고 가능 -->
+		SELECT name, age
+		FROM human_table
+	</select>
+	
+	<update id = "updateHuman" parameterType = "humanDto">
+		UPDATE human_table
+		SET age = #{age}
+		WHERE name = #{name}
+	
+	</update>
+	<delete id="deleteHuman" parameterType="string">
+		DELETE FROM human_table
+		WHERE name=#{name}
+	</delete>
+	<insert id="insertHuman" parameterType="humanDto">
+		INSERT INTO human_table(name,age)
+		values(#{name}, #{age})
+	
+	</insert>
+	
+	<select id = "searchListHuman" parameterType = "string" resultType = "humanDto"> 
+		SELECT name, age
+		FROM human_table
+		WHERE name Like concat('%', #{keyName}, '%')
+	</select>
+	<select id = "getHumanCnt" parameterType = "string" resultType = "int"> 
+		SELECT count(name)
+		FROM human_table
+		WHERE name = #{keyName}
+	</select>
+</mapper>
